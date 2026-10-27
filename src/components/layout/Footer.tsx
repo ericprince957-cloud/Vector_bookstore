@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Mail, MapPin } from 'lucide-react';
+import { BookOpen, Mail, MapPin, Send, CheckCircle } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    // TODO: wire to a newsletter API
+    setSubscribed(true);
+    setEmail('');
+    setTimeout(() => setSubscribed(false), 5000);
+  };
+
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Newsletter */}
+        <div className="mb-12 p-6 sm:p-8 bg-gray-800 rounded-2xl">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h3 className="text-white font-semibold text-lg">Stay in the loop</h3>
+              <p className="text-sm text-gray-400 mt-1">
+                Get new releases, discounts and free resources straight to your inbox.
+              </p>
+            </div>
+            <form onSubmit={handleSubscribe} className="flex w-full max-w-md gap-2">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="flex-1 px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500"
+              />
+              <button
+                type="submit"
+                className="flex items-center gap-2 px-5 py-2.5 bg-emerald-700 text-white text-sm font-medium rounded-lg hover:bg-emerald-800 transition-colors whitespace-nowrap"
+              >
+                {subscribed ? <CheckCircle className="w-4 h-4" /> : <Send className="w-4 h-4" />}
+                {subscribed ? 'Subscribed' : 'Subscribe'}
+              </button>
+            </form>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, ShoppingCart, BookOpen } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
+import ThemeToggle from '../ui/ThemeToggle';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,13 +20,13 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+    <header className="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-gray-100 dark:border-slate-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <BookOpen className="w-7 h-7 text-emerald-700" />
-            <span className="text-xl font-bold text-gray-900">BookVault</span>
+            <BookOpen className="w-7 h-7 text-emerald-700 dark:text-emerald-400" />
+            <span className="text-xl font-bold text-gray-900 dark:text-white">BookVault</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -34,7 +35,7 @@ const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
               >
                 {link.name}
               </Link>
@@ -42,10 +43,12 @@ const Navbar: React.FC = () => {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
+
             <button
               onClick={() => navigate('/search')}
-              className="p-2 text-gray-500 hover:text-gray-900 transition-colors"
+              className="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
@@ -53,7 +56,7 @@ const Navbar: React.FC = () => {
 
             <Link
               to="/cart"
-              className="relative p-2 text-gray-500 hover:text-gray-900 transition-colors"
+              className="relative p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
               aria-label="Cart"
             >
               <ShoppingCart className="w-5 h-5" />
@@ -67,14 +70,14 @@ const Navbar: React.FC = () => {
             {isAuthenticated ? (
               <Link
                 to="/dashboard"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white"
               >
                 {user?.name?.split(' ')[0] || 'Dashboard'}
               </Link>
             ) : (
               <Link
                 to="/login"
-                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
               >
                 Sign In
               </Link>
@@ -89,15 +92,16 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex md:hidden items-center gap-3">
+          <div className="flex md:hidden items-center gap-1">
+            <ThemeToggle />
             <button
               onClick={() => navigate('/search')}
-              className="p-2 text-gray-500"
+              className="p-2 text-gray-500 dark:text-gray-400"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
             </button>
-            <Link to="/cart" className="relative p-2 text-gray-500" aria-label="Cart">
+            <Link to="/cart" className="relative p-2 text-gray-500 dark:text-gray-400" aria-label="Cart">
               <ShoppingCart className="w-5 h-5" />
               {totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-700 text-white text-[10px] rounded-full flex items-center justify-center">
@@ -107,7 +111,7 @@ const Navbar: React.FC = () => {
             </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-gray-500"
+              className="p-2 text-gray-500 dark:text-gray-400"
               aria-label="Menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -118,23 +122,23 @@ const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100">
+        <div className="md:hidden bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-700">
           <div className="px-4 py-4 space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="block py-2 text-base font-medium text-gray-700 hover:text-emerald-700"
+                className="block py-2 text-base font-medium text-gray-700 hover:text-emerald-700 dark:text-gray-200 dark:hover:text-emerald-400"
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}
               </Link>
             ))}
-            <div className="pt-3 border-t border-gray-100">
+            <div className="pt-3 border-t border-gray-100 dark:border-slate-700">
               {isAuthenticated ? (
                 <Link
                   to="/dashboard"
-                  className="block py-2 text-base font-medium text-gray-700"
+                  className="block py-2 text-base font-medium text-gray-700 dark:text-gray-200"
                   onClick={() => setIsOpen(false)}
                 >
                   My Dashboard
@@ -142,7 +146,7 @@ const Navbar: React.FC = () => {
               ) : (
                 <Link
                   to="/login"
-                  className="block py-2 text-base font-medium text-gray-700"
+                  className="block py-2 text-base font-medium text-gray-700 dark:text-gray-200"
                   onClick={() => setIsOpen(false)}
                 >
                   Sign In
