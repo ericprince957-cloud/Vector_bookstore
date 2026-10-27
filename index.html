@@ -7,6 +7,16 @@
     <meta name="description" content="Discover practical digital books designed to help you develop useful skills, manage your money, build businesses and navigate the modern digital world." />
     <meta name="theme-color" content="#047857" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>" />
+    <script>
+      // Apply saved theme before first paint to avoid a flash of the wrong theme
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          var dark = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
     <style>
       html, body {
         margin: 0;

@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Custom styles */
 @layer base {
   html {
@@ -10,6 +13,10 @@
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  html.dark body {
+    background-color: #0f172a;
   }
 }
 
@@ -32,3 +39,44 @@
     perspective: 1000px;
   }
 }
+
+/*
+ * Dark mode theme sheet.
+ * Applies dark surfaces/text to the utility classes used across the app,
+ * so every page flips to dark mode together without needing per-page edits.
+ */
+html.dark {
+  color-scheme: dark;
+}
+
+.dark .bg-white { background-color: #1e293b !important; }
+.dark .bg-white\/95 { background-color: rgba(15, 23, 42, 0.95) !important; }
+.dark .bg-gray-50 { background-color: #0f172a !important; }
+.dark .bg-gray-100 { background-color: #334155 !important; }
+.dark .bg-gray-200 { background-color: #334155 !important; }
+
+.dark .text-gray-900 { color: #f8fafc !important; }
+.dark .text-gray-800 { color: #e2e8f0 !important; }
+.dark .text-gray-700 { color: #cbd5e1 !important; }
+.dark .text-gray-600 { color: #94a3b8 !important; }
+.dark .text-gray-500 { color: #94a3b8 !important; }
+.dark .text-gray-400 { color: #64748b !important; }
+.dark .text-gray-300 { color: #cbd5e1 !important; }
+.dark .text-gray-200 { color: #e2e8f0 !important; }
+
+.dark .border-gray-100 { border-color: #334155 !important; }
+.dark .border-gray-200 { border-color: #334155 !important; }
+.dark .border-gray-300 { border-color: #475569 !important; }
+
+.dark .hover\:bg-gray-50:hover { background-color: #0f172a !important; }
+.dark .hover\:bg-gray-100:hover { background-color: #334155 !important; }
+.dark .hover\:text-gray-900:hover { color: #f8fafc !important; }
+
+.dark .text-emerald-700 { color: #34d399 !important; }
+.dark .text-emerald-600 { color: #34d399 !important; }
+
+.dark ::placeholder { color: #64748b !important; }
+
+.dark ::-webkit-scrollbar { width: 10px; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; }
+.dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 8px; }
